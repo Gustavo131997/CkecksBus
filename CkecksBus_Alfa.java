@@ -3,10 +3,13 @@
  */
 package ckecksbus_alfa;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.Iterator;
 
 public class CkecksBus_Alfa {
 
