@@ -114,15 +114,8 @@ public class CkecksBus_Alfa {
                     contraseña = leer.next();
                     eliminarFuncionario(nombrefuncionario, empresaquepertenece, nombreusuario, funcionarios);
                     break;
-                case "3":System.out.println("Ingrese nombre de funcionario");
-                    nombrefuncionario = leer.nextLine();
-                    System.out.println("Ingrese Empresa que pertenece");
-                    empresaquepertenece = leer.nextLine();
-                    System.out.println("Ingrese Nombre de Usuario");
-                    nombreusuario = leer.nextLine();
-                    System.out.println("Ingrese Contraseña de Usuario");
-                    contraseña = leer.nextLine();
-                    modificarFuncionario(nombrefuncionario, empresaquepertenece,nombreusuario, funcionarios);
+                case "3":
+                    menuModificarFuncionario(funcionarios);
                     break;
                 case "4":
                     mostrarFuncionarios(funcionarios);
@@ -158,12 +151,66 @@ public class CkecksBus_Alfa {
         }
         return null;
     }
-    public static void menuModificar(){
-        System.out.println(" 1 - modificar nombre"+"\t 2 - modificar empresa");
-    }
-    public static void modificarFuncionario(String nombrefuncionario,String empresaquepertenece,String terminalquepertenece,ArrayList<String> funcionarios){
+    public static void menuModificarFuncionario(ArrayList<String> funcionarios){//metodo para modificar el nombre, usuario y empresa del funcionario        
+        Scanner leer = new Scanner(System.in);
+        String nombre, empresa, usuario,contraseña, opcion;
+        String nombreOriginal, empresaOriginal, usuarioOriginal, contraseñaOriginal;
+        leer.nextLine();
+        //Se guardan los datos en variable auxiliares para poder utiliar metodo eliminarFuncionarios
+     //y modificar los datos del funcionario volviendolo a añadir
+        System.out.println("Nombre funcionario:");
+        nombre= leer.nextLine();
+        nombreOriginal=nombre;
+     
+        System.out.println("Empresa que pertenece:");
+        empresa=leer.nextLine();
+        empresaOriginal=empresa;
+     
+        System.out.println("Nombre de usuario:");
+        usuario=leer.nextLine();
+        usuarioOriginal=usuario;
+     
+        System.out.println("Contraseña:");
+        contraseña=leer.nextLine();
+        contraseñaOriginal=contraseña;
         
-    }
+        
+        if (validarExistenciaFuncionarioTerminal(nombre,empresa,usuario,funcionarios)!=null) {
+            System.out.println(" 1 - modificar nombre fincionario"+"\n 2 - modificar empresa"
+                +"\n 3 - modificar usuario");
+            do {
+                opcion=leer.next();
+            } while (!(opcion.equals("1") || opcion.equals("2") || opcion.equals("3")));
+            
+            switch(opcion){
+                
+                case "1": System.out.println("Nuevo nombre:");
+                leer.nextLine();
+                nombre=leer.nextLine();
+                eliminarFuncionario(nombreOriginal, empresaOriginal, usuarioOriginal,funcionarios);
+                añadirFuncionarioTerminal(nombre,empresaOriginal, usuarioOriginal,funcionarios);
+                break;
+                    
+                case "2": System.out.println("Nueva empresa:");
+                leer.nextLine();
+                empresa=leer.nextLine();
+                eliminarFuncionario(nombreOriginal, empresaOriginal, usuarioOriginal,funcionarios);
+                añadirFuncionarioTerminal(nombreOriginal,empresa, usuarioOriginal,funcionarios);
+                break;
+                
+                case "3": System.out.println("Nuevo nombre de usuario:");
+                leer.nextLine();
+                usuario=leer.nextLine();
+                eliminarFuncionario(nombreOriginal, empresaOriginal, usuarioOriginal,funcionarios);
+                añadirFuncionarioTerminal(nombreOriginal,empresaOriginal, usuario,funcionarios);
+                break;
+                
+            }
+        }else{
+            System.out.println("El funcionario ingresado no existe");
+        }
+        
+    }     
     
     public static void mostrarFuncionarios(ArrayList<String> funcionarios){
         System.out.println("Funcionarios");
