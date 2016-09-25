@@ -78,10 +78,8 @@ public class CkecksBus_Alfa {
         String nombrefuncionario, empresaquepertenece, nombreusuario, contraseña, terminalquepertenece, opc = "";
         do {
             System.out.println(" 1 - Añadir funcionario" + "\n 2 - Eliminar funcinario" + "\n 3 - Modificar funcionario" + "\n 4 - Mostrar funcionario" + "\n 0 - salir");
-            do {
                 System.out.println("Ingrese opcion");
                 opc = leer.next();
-            } while (!"1".equals(opc) && !"2".equals(opc) && !"3".equals(opc) && !"4".equals(opc) && !"0".equals(opc));
             switch (opc) {
                 case "1":
                     String holanosirveparanada1 = leer.nextLine(); // Esto es para que no salte el leer contraseña
@@ -207,10 +205,8 @@ public class CkecksBus_Alfa {
         if (!"f".equals(opc)) {//si el validador de usuario de arriba no ha asignado el valor "f" a opc , hay luz verde para avanzar al menu itinerario, caso contrario vuelve al menu principal
             do {
                 System.out.println(" 1 - Añadir Itinerario" + "\n 2 - Eliminar Itinerario" + "\n 3 - Modificar Itinerario" + "\n 0 - salir");
-                do {
                     System.out.println("Ingrese opcion");
                     opc = leer.next();
-                } while (!"1".equals(opc) && !"2".equals(opc) && !"3".equals(opc) && !"0".equals(opc));
                 switch (opc) {
                     case "1":
 
@@ -248,6 +244,8 @@ public class CkecksBus_Alfa {
                         break;
                     case "0":
                         break;
+                     default: System.out.println("Opcion no valida");
+                     break;  
                 }
             } while (!"0".equals(opc));
         }
