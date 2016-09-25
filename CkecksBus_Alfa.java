@@ -13,10 +13,10 @@ public class CkecksBus_Alfa {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
-        menu();
-
+   public static void main(String[] args) {
+         menu();
     }
+
 
     public static void menu() {
         Scanner leer = new Scanner(System.in);
@@ -58,10 +58,14 @@ public class CkecksBus_Alfa {
     /* el metodo MenuFuncionarios recibe unicamente ArrayList funcionarios para que los guarde en el metodo menu */
 
     public static void mostrarTerminal(String nombreterminal, String region, String direccion, ArrayList<String> funcionarios, ArrayList<String> itinerario) {
-        System.out.println("Terminal: " + nombreterminal + " Region: " + region + " Direccion: " + direccion + " ");
-        System.out.println("Itinerario: ");
-        for (int i = 0; i < itinerario.size(); i++) {
-            System.out.println(itinerario.get(i));
+       System.out.println("Nombre de Terminal: "+ nombreterminal+" Region: "+region+" Direccion: "+direccion);
+        System.out.println("Funcionarios del Terminal");
+        for (Iterator i = funcionarios.iterator(); i.hasNext();) {
+            System.out.println(i.next());
+        }
+        System.out.println("Itinerario del Terminal;");
+        for (Iterator i = itinerario.iterator(); i.hasNext();) {
+            System.out.println(i.next());
         }
 
     }
@@ -69,42 +73,55 @@ public class CkecksBus_Alfa {
     public static void menuFuncionarios(ArrayList<String> funcionarios) {
         Scanner leer = new Scanner(System.in);
         String nombrefuncionario, empresaquepertenece, nombreusuario, contraseña, terminalquepertenece, opc = "";
-        System.out.println(" 1 - Añadir funcionario" + "\n 2 - Eliminar funcinario" + "\n 3 - Modificar funcionario" + "\n 4 - Mostrar funcionario" + "\n 0 - salir");
         do {
+            System.out.println(" 1 - Añadir funcionario" + "\n 2 - Eliminar funcinario" + "\n 3 - Modificar funcionario" + "\n 4 - Mostrar funcionario" + "\n 0 - salir");
             do {
                 System.out.println("Ingrese opcion");
                 opc = leer.next();
             } while (!"1".equals(opc) && !"2".equals(opc) && !"3".equals(opc) && !"4".equals(opc) && !"0".equals(opc));
             switch (opc) {
                 case "1":
+                    String holanosirveparanada1 = leer.nextLine(); // Esto es para que no salte el leer contraseña
                     do {
                         System.out.println("Nombre Funcionario: ");
-                        nombrefuncionario = leer.next();
+                        nombrefuncionario = leer.nextLine();
                     } while (!ValidarNombres(nombrefuncionario));//el ciclo seguira mientras el validador diga que el patron de escritura del nombre es erroneo
                     do {
                         System.out.println("Empresa: ");
-                        empresaquepertenece = leer.next();
+                        empresaquepertenece = leer.nextLine();
                     } while (!ValidarNombres(empresaquepertenece));//el ciclo seguira mientras el validador diga que el patron de escritura es erroneo
                     do {
                         System.out.println("Nombre Usuario: (8 digitos minimo) ");
                         nombreusuario = leer.next();
                     } while (nombreusuario.replaceAll(" ", "").length() < 8);//el ciclo seguira mientras el usuario tenga menos de 8 digitos descontando los espacios
+                    String holanosirveparanada = leer.nextLine(); // Esto es para que no salte el leer contraseña
                     do {
                         System.out.println("Contraseña:(8 digitos minimo) ");
                         contraseña = leer.nextLine();
                     } while (contraseña.replaceAll(" ", "").length() < 8);// el ciclo seguira mientras la contraseÃ±a tenga menos de 8 dijitos descontando los espacios
-                    do {
-                        System.out.println("Ingrese terminal que pertenece");
-                        terminalquepertenece = leer.nextLine();
-                    } while (!ValidarNombres(terminalquepertenece));
-                    añadirFuncionarioTerminal(nombrefuncionario, empresaquepertenece, nombreusuario, terminalquepertenece, funcionarios);
+                    añadirFuncionarioTerminal(nombrefuncionario, empresaquepertenece, nombreusuario, funcionarios);
 
                     break;
-                case "2":
-                    eliminarFuncionario(funcionarios);
+                case "2": String holanosirveparanada2 = leer.nextLine(); // Esto es para que no salte el leer contraseña
+                    System.out.println("Ingrese Nombre de funcionario");
+                    nombrefuncionario = leer.nextLine();
+                    System.out.println("Ingrese empresa que pertenece");
+                    empresaquepertenece = leer.nextLine();
+                    System.out.println("Ingrese nombre de usuario");
+                    nombreusuario = leer.next();
+                    System.out.println("Contraseña:");
+                    contraseña = leer.next();
+                    eliminarFuncionario(nombrefuncionario, empresaquepertenece, nombreusuario, funcionarios);
                     break;
-                case "3":
-                    modificarFuncionario(funcionarios);
+                case "3":System.out.println("Ingrese nombre de funcionario");
+                    nombrefuncionario = leer.nextLine();
+                    System.out.println("Ingrese Empresa que pertenece");
+                    empresaquepertenece = leer.nextLine();
+                    System.out.println("Ingrese Nombre de Usuario");
+                    nombreusuario = leer.nextLine();
+                    System.out.println("Ingrese Contraseña de Usuario");
+                    contraseña = leer.nextLine();
+                    modificarFuncionario(nombrefuncionario, empresaquepertenece,nombreusuario, funcionarios);
                     break;
                 case "4":
                     mostrarFuncionarios(funcionarios);
@@ -116,40 +133,41 @@ public class CkecksBus_Alfa {
         } while (!"0".equals(opc));
     }
 
-    public static void añadirFuncionarioTerminal(String nombrefuncionario, String empresaquepertenece, String nombreusuario, String terminalquepertenece, ArrayList<String> funcionario) {
-        if (validarAñadirFuncionarioTerminal(nombrefuncionario, empresaquepertenece, nombreusuario, terminalquepertenece, funcionario)) {
-            funcionario.add("Funcionario: " + nombrefuncionario + "\t Empresa: " + empresaquepertenece + "\n Nombre de usuario: " + nombreusuario + " \t contraseÃ±a: *********"
-                    + "\n Terminal al que pertenece: " + terminalquepertenece);// agrega los datos de los funcionario en una linea  
+    public static void añadirFuncionarioTerminal(String nombrefuncionario, String empresaquepertenece, String nombreusuario, ArrayList<String> funcionario) {
+        if (validarExistenciaFuncionarioTerminal(nombrefuncionario, empresaquepertenece, nombreusuario, funcionario)== null) {
+            funcionario.add("Funcionario: " + nombrefuncionario + "\t Empresa: " + empresaquepertenece + "\n Nombre de usuario: " + nombreusuario + " \t contraseña: *********");// agrega los datos de los funcionario en una linea  
         } else {
             System.out.println("Existe funcionario");
         }
     }
-    /* El metodo ValidarAñadirFuncionarioTerminal los datos de los funcionarios los cuales contatenan en un String y tambien resive un ArrayList funcionario
-     guarda los String de los funcionarios y este metodo busca que no contenga dos veces el mismo String funcionario*/
-
-    public static boolean validarAñadirFuncionarioTerminal(String nombrefun, String empresa, String nombreusu, String terminal, ArrayList<String> funcionario) {
-        String funcionario1 = "Funcionario: " + nombrefun + "\t Empresa: " + empresa + "\n Nombre de usuario: " + nombreusu + " \t contraseÃ±a: *********"
-                + "\n Terminal al que pertenece: " + terminal;
-        for (String l : funcionario) {
+    
+    public static void eliminarFuncionario(String nombrefuncionario,String empresa,String nombreusu, ArrayList<String> funcionarios){
+        if (validarExistenciaFuncionarioTerminal(nombrefuncionario, empresa, nombreusu, funcionarios) != null) {
+            funcionarios.remove(validarExistenciaFuncionarioTerminal(nombrefuncionario, empresa, nombreusu, funcionarios));
+        }else{ System.out.println("El funcionario a eliminar no existe");}
+    }
+    /*Esta que entrega el String que coideciden con los datos que se piden,  dado que los concatenan en un solo String y lo busca en el ArrayList funcionario que tiene
+    que tiene misma secuencia de caracteres */
+    public static String validarExistenciaFuncionarioTerminal(String nombrefuncionario,String empresa,String nombreusu, ArrayList<String> funcionarios){
+    String funcionario1 = "Funcionario: " + nombrefuncionario + "\t Empresa: " + empresa + "\n Nombre de usuario: " + nombreusu + " \t contraseña: *********";
+        for (String l : funcionarios) {
             if (l.contains(funcionario1)) {
-                return false;
+                return l;
             }
         }
-        return true;
+        return null;
     }
-    
-    public static void eliminarFuncionario(String nombrefuncionario,String empresaquepertenece,String terminalquepertenece,ArrayList<String> funcionarios){
-        
+    public static void menuModificar(){
+        System.out.println(" 1 - modificar nombre"+"\t 2 - modificar empresa");
     }
-    
     public static void modificarFuncionario(String nombrefuncionario,String empresaquepertenece,String terminalquepertenece,ArrayList<String> funcionarios){
         
     }
     
     public static void mostrarFuncionarios(ArrayList<String> funcionarios){
-        System.out.println("Funcionarios: ");
-        for(int i=0;i<funcionarios.size();i++){
-            System.out.println(funcionarios.get(i));
+        System.out.println("Funcionarios");
+         for (Iterator i = funcionarios.iterator(); i.hasNext();) {
+            System.out.println(i.next());
         }
     }
 
@@ -172,12 +190,15 @@ public class CkecksBus_Alfa {
                     System.out.println("Ingrese Usuario: ");
                     String usuario = leer.next();
                     System.out.println("Ingrese Contraseña: ");
-                    String contraseña = leer.next();
-                    if (validarUsuarioContraseña(usuario, contraseña, funcionarios)) {// comprueba que lo ingresado sea valido en caso de ser verdadero
+                    String contraseña = leer.next(); //La contraseña es una mera formalidad para este programa
+                    if (validarUsuario(usuario, funcionarios)) {// comprueba que lo ingresado sea valido en caso de ser verdadero
                         op="0";
                     }else{
                         System.out.println("Usuario y/o Contraseña no valida");
                     }
+                break;
+                default: System.out.println("Opcion no valida");
+                break;
             }
         } while (!"0".equals(op));// hasta que no se ingrese un 0 no se saldra del validador y por ende del menu validador usuario
         if (!"f".equals(opc)) {//si el validador de usuario de arriba no ha asignado el valor "f" a opc , hay luz verde para avanzar al menu itinerario, caso contrario vuelve al menu principal
@@ -191,9 +212,10 @@ public class CkecksBus_Alfa {
                     case "1":
 
                         do {
-                            System.out.println("Ingrese Fecha: (ej: 12/1)");
+                            System.out.println("Ingrese Fecha: (ej: dd/mm/yyyy)");
                             fecha = leer.next();
                         } while (!ValidarFecha(fecha));//el ciclo seguira mientras el validador indique que no se cumple con el formato de fecha
+                        
                         do {
                             System.out.println("Ingrese Hora LLegada del Bus: (ej: hh:mm) ");
                             horaLlegadaBus = leer.next();
@@ -202,6 +224,7 @@ public class CkecksBus_Alfa {
                             System.out.println("Ingrese Hora Salida del Bus: (ej: hh:mm)");
                             horaSalidaBus = leer.next();
                         } while (!ValidarHora(horaSalidaBus));
+                        String holanosirveparanada3 = leer.nextLine(); // Esto es para que no salte el leer contraseña
                         do {
                             System.out.println("Ingrese empresa que pertenece el bus");
                             empresa = leer.nextLine();
@@ -227,34 +250,35 @@ public class CkecksBus_Alfa {
         }
     }
 
-    public static boolean validarUsuarioContraseña(String usuario, String contraseña, ArrayList<String> funcionario) {
-        String val = usuario, val2 = contraseña;
+    public static boolean validarUsuario(String usuario, ArrayList<String> funcionario) {
+        String val = usuario;
 
         for (String l : funcionario) {
-            if (l.contains(val) && l.contains(val2)) {
+            if (l.contains(val)) {
                 return true;
             }
         }
         return false;
     }
-
+  
     public static void añadirItinerarioBus(String estadoBus, String destino, String empresa, String horaSalidaBus, String horaLlegadaBus, String fecha, ArrayList<String> itinerario) {
 
         if (validarAñadirItinerarioBus(estadoBus, destino, empresa, horaSalidaBus, horaLlegadaBus, fecha, itinerario)) {
-            String hola = "Fecha: " + fecha + "Hora de Llegada: " + horaLlegadaBus + " Hora de salida: " + horaSalidaBus
-                    + " Empresa: " + empresa + " Destino: " + destino + " estado de Bus: " + estadoBus;
+            String hola = "Fecha: " + fecha + "\n Hora de Llegada: " + horaLlegadaBus + "\t Hora de salida: " + horaSalidaBus
+                    + "\n Empresa: " + empresa + "\t Destino: " + destino + " estado de Bus: " + estadoBus;
             itinerario.add(hola);
         } else {
             System.out.println("Itinerario de Bus existente");
         }
 
     }
-
+/*El validarAñadirItinerarioBus recive los datos de un itinerario y el ArrayList de String funcionario y genera un String (que en este caso le pusimos iti) que
+  contiene la misma secuencia caracteres entre comillas con el que esta en el metodo añadirItinerarioBus para que si el ArrayList contiene algo igual retorne false (Para el metodo que añade diga que existe funcionario) y sino retorne true*/  
     public static boolean validarAñadirItinerarioBus(String estadoBus, String destino, String empresa, String horaSalidaBus, String horaLlegadaBus, String fecha, ArrayList<String> itinerario) {
-        String hola = "Fecha: " + fecha + "Hora de Llegada: " + horaLlegadaBus + " Hora de salida: " + horaSalidaBus
-                + " Empresa: " + empresa + " Destino: " + destino + " estado de Bus: " + estadoBus;
+        String iti = "Fecha: " + fecha + "\n Hora de Llegada: " + horaLlegadaBus + "\t Hora de salida: " + horaSalidaBus
+                + "\n Empresa: " + empresa + "\t Destino: " + destino + " estado de Bus: " + estadoBus;
         for (String l : itinerario) {
-            if (l.contains(hola)) {
+            if (l.contains(iti)) {
                 return false;
             }
         }
@@ -262,19 +286,23 @@ public class CkecksBus_Alfa {
     }
 
     public static boolean ValidarNombres(String nombre) {
-        Pattern pat = Pattern.compile("[A-Za-z]+");
+        Pattern pat = Pattern.compile("[A-Za-z]+( [A-Za-z]+)*");
         Matcher mac = pat.matcher(nombre);
         return (mac.matches());
     }
 
     public static boolean ValidarFecha(String fecha) {
-        Pattern pat = Pattern.compile("[\\d]{1,2}[-|/]{1}[\\d]{1,2}");
-        Matcher mac = pat.matcher(fecha);
-        return (mac.matches());
+        SimpleDateFormat df1 = new SimpleDateFormat("dd/MM/yyyy");
+        Date testDate = null;
+        String date1 = fecha;
+        try{
+            testDate = df1.parse(date1);
+        } catch (Exception e){ System.out.println("Formato invalido");}
+        return df1.format(testDate).equals(date1);
     }
 
     public static boolean ValidarHora(String hora) {
-        Pattern pat = Pattern.compile("[\\d]{2,2}:[\\d]{2,2}");
+        Pattern pat = Pattern.compile("[0-2]*[0-9]{1}:[0-5]{1}[0-9]{1}");
         Matcher mac = pat.matcher(hora);
         return (mac.matches());
     }
