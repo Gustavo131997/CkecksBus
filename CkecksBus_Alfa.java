@@ -1,8 +1,7 @@
-/*
+    /*
  Este programa va a estar orientado a los funcionarios de un terminal por ahora.
  */
-package ckecksbus_alfa;
-
+package ckecksbus_versionalfa;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -11,17 +10,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.Iterator;
 
-public class CkecksBus_Alfa {
+public class CkecksBus_VersionAlfa {
 
-    /**
-     * @param args the command line arguments
-     */    
-    
    public static void main(String[] args) {
          menu();
     }
-
-
     public static void menu() {
         Scanner leer = new Scanner(System.in);
         ArrayList<String> funcionarios = new ArrayList<>();
@@ -84,7 +77,7 @@ public class CkecksBus_Alfa {
                 opc = leer.next();
             switch (opc) {
                 case "1":
-                    String holanosirveparanada1 = leer.nextLine(); // Esto es para que no salte el leer contraseña
+                    leer.nextLine(); // Esto es para que no salte el leer contraseña
                     do {
                         System.out.println("Nombre Funcionario: ");
                         nombrefuncionario = leer.nextLine();
@@ -97,7 +90,7 @@ public class CkecksBus_Alfa {
                         System.out.println("Nombre Usuario: (8 digitos minimo) ");
                         nombreusuario = leer.next();
                     } while (nombreusuario.replaceAll(" ", "").length() < 8);//el ciclo seguira mientras el usuario tenga menos de 8 digitos descontando los espacios
-                    String holanosirveparanada = leer.nextLine(); // Esto es para que no salte el leer contraseña
+                    leer.nextLine(); // Esto es para que no salte el leer contraseña
                     do {
                         System.out.println("Contraseña:(8 digitos minimo) ");
                         contraseña = leer.nextLine();
@@ -105,7 +98,7 @@ public class CkecksBus_Alfa {
                     añadirFuncionarioTerminal(nombrefuncionario, empresaquepertenece, nombreusuario, funcionarios);
 
                     break;
-                case "2": String holanosirveparanada2 = leer.nextLine(); // Esto es para que no salte el leer contraseña
+                case "2": leer.nextLine(); // Esto es para que no salte el leer contraseña
                     System.out.println("Ingrese Nombre de funcionario");
                     nombrefuncionario = leer.nextLine();
                     System.out.println("Ingrese empresa que pertenece");
@@ -243,6 +236,7 @@ public class CkecksBus_Alfa {
     public static void menuItinerario(ArrayList<String> itinerario, ArrayList<String> funcionarios) {
         Scanner leer = new Scanner(System.in);
         String opc="", op, estadoBus, destino, empresa, horaSalidaBus, horaLlegadaBus, fecha;
+        String nombrefuncionario, empresaquepertenece, nombreusu, contraseña;
         do {
             System.out.println("Usted debe comprobar su identidad: ");
             System.out.println("0 - Salir");
@@ -256,11 +250,15 @@ public class CkecksBus_Alfa {
                     opc="f";//con esto designa opc como algo para usar en el validador if de mas abajo,para ver si avanza al itinerario o no
                     break;
                 case "1":
-                    System.out.println("Ingrese Usuario: ");
-                    String usuario = leer.next();
-                    System.out.println("Ingrese Contraseña: ");
-                    String contraseña = leer.next(); //La contraseña es una mera formalidad para este programa
-                    if (validarUsuario(usuario, funcionarios)) {// comprueba que lo ingresado sea valido en caso de ser verdadero
+                    System.out.println("Ingrese Nombre de funcionario");
+                    nombrefuncionario = leer.nextLine();
+                    System.out.println("Ingrese empresa que pertenece");
+                    empresa = leer.nextLine();
+                    System.out.println("Ingrese nombre de usuario");
+                    nombreusu = leer.next();
+                    System.out.println("Contraseña:");
+                    contraseña = leer.next(); //La contraseña es una mera formalidad para este programa
+                    if (validarExistenciaFuncionarioTerminal(nombrefuncionario, empresa, nombreusu, funcionarios) != null) {// comprueba que lo ingresado sea valido en caso de ser verdadero
                         op="0";
                     }else{
                         System.out.println("Usuario y/o Contraseña no valida");
@@ -469,16 +467,6 @@ public class CkecksBus_Alfa {
         }
     }
 
-    public static boolean validarUsuario(String usuario, ArrayList<String> funcionario) {
-        String val = usuario;
-        for (String l : funcionario) {            
-            if (l.contains(val)) {
-                return true;
-            }
-        }
-        return false;
-    }
-  
     public static void añadirItinerarioBus(String estadoBus, String destino, String empresa, String horaSalidaBus, String horaLlegadaBus, String fecha, ArrayList<String> itinerario) {
 
         if (validarAñadirItinerarioBus(estadoBus, destino, empresa, horaSalidaBus, horaLlegadaBus, fecha, itinerario)==null) {
