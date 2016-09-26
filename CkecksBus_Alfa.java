@@ -516,7 +516,7 @@ public class CkecksBus_VersionAlfa {
             try{
                 testDate = df1.parse(date1);
             } catch (Exception e){ System.out.println("Formato invalido");}
-            return df1.format(testDate).equals(date1) && (mac.matches());
+            return df1.format(testDate).equals(date1);
         }else{
             return false;
         }
