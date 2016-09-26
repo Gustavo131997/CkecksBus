@@ -339,14 +339,16 @@ public class CkecksBus_Alfa {
         return (mac.matches());
     }
 
-    public static boolean ValidarFecha(String fecha) {
+   public static boolean ValidarFecha(String fecha) {
+        Pattern pat = Pattern.compile("[\\d]{2,2}/[\\d]{2,2}/[\\d]{4,4}");
+        Matcher mac = pat.matcher(fecha);
         SimpleDateFormat df1 = new SimpleDateFormat("dd/MM/yyyy");
         Date testDate = null;
         String date1 = fecha;
         try{
             testDate = df1.parse(date1);
         } catch (Exception e){ System.out.println("Formato invalido");}
-        return df1.format(testDate).equals(date1);
+        return df1.format(testDate).equals(date1) && (mac.matches());
     }
 
     public static boolean ValidarHora(String hora) {
